@@ -1,10 +1,7 @@
 timestamps {
     node('built-in') {
-        // Define a tool named 'Python' with an installation of Python 3.x
-        // You can configure this in Jenkins Global Tool Configuration
-        tools {
-            tool 'Python'
-        }
+        
+       
         stage('CleanWorkspace') {
             cleanWs()
         }
@@ -21,12 +18,17 @@ timestamps {
                 url: 'https://github.com/pavankalyanbakkani/IAM']]
             ])
         }
+        stage('Install Python') {
+    steps {
+        script {
+            sh 'sudo apt-get update && sudo apt-get install -y python3'
+        }
+    }
         stage('ACTION/DeACTION') {
             // Install required packages:
-            sh "install python3"
-            def python = tool name: 'Python', type: 'Tool'
-            // Install boto3 package
-            sh "${python}/bin/python -m pip install --user boto3"
+            sh 'python -m pip install --user boto3'
+            sh 'pip install python3'
+            
 
             // Change directory and set AWS profile and region based on the environment
             sh '''
