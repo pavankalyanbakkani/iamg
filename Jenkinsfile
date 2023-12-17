@@ -27,7 +27,7 @@ timestamps {
         stage('ACTION/DeACTION') {
             // Install required packages:
             sh 'python -m pip install --user boto3'
-            sh 'pip install python3'
+          
             
 
             // Change directory and set AWS profile and region based on the environment
