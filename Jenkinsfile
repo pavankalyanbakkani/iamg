@@ -24,7 +24,7 @@ timestamps {
             sh 'python -m pip install --user boto3'
             // Change directory and set AWS profile and region based on the environment
             sh '''
-                cd IAMUSER
+                
                 if [ "$ENVIRONMENT" == "dev" ]; then
                     export AWS_PROFILE=dev
                     export AWS_DEFAULT_REGION=${AWS_REGION}
@@ -39,7 +39,7 @@ timestamps {
                     exit 1
                 fi
 
-                python IAMUSERPULL.py   # Pass the region parameter to the script
+                python iam.py   # Pass the region parameter to the script
             '''
            stage('Archive Artifacts') {
     // Archive artifacts for the chosen AWS profile
