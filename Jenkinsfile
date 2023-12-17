@@ -1,16 +1,15 @@
 timestamps {
     node('built-in') {
-         tools {
         // Define a tool named 'Python' with an installation of Python 3.x
         // You can configure this in Jenkins Global Tool Configuration
-        tool 'Python'
-    }
+        tools {
+            tool 'Python'
+        }
         stage('CleanWorkspace') {
             cleanWs()
         }
         parameters {
-            choice(name: 'ENVIRONMENT', choices: ['dev', 'uat','prod'], description: 'Select environment')
-            
+            choice(name: 'ENVIRONMENT', choices: ['dev', 'uat', 'prod'], description: 'Select environment')
         }
         stage('Checkout') {
             checkout([$class: 'GitSCM',
@@ -24,13 +23,12 @@ timestamps {
         }
         stage('ACTION/DeACTION') {
             // Install required packages:
-            def AccessKeyId 
-            def SecretAccessKey
-          def python = tool name: 'Python', type: 'Tool'
-          sh "${python}/bin/python -m pip install --user boto3"
+            def python = tool name: 'Python', type: 'Tool'
+            // Install boto3 package
+            sh "${python}/bin/python -m pip install --user boto3"
+
             // Change directory and set AWS profile and region based on the environment
             sh '''
-                def python = tool name: 'Python', type: 'Tool'
                 if [ "$ENVIRONMENT" == "dev" ]; then
                     export AWS_PROFILE=dev
                     export AWS_DEFAULT_REGION=${AWS_REGION}
@@ -45,17 +43,17 @@ timestamps {
                     exit 1
                 fi
 
-                python iam.py   # Pass the region parameter to the script
+                ${python}/bin/python iam.py   # Pass the region parameter to the script using ${AWS_REGION}
             '''
-           stage('Archive Artifacts') {
-    // Archive artifacts for the chosen AWS profile
-    archiveArtifacts allowEmptyArchive: true,
-        artifacts: "**/*.csv",
-        caseSensitive: true,
-        defaultExcludes: false,
-        fingerprint: true,
-        onlyIfSuccessful: true
-}
+        }
+        stage('Archive Artifacts') {
+            // Archive artifacts for the chosen AWS profile
+            archiveArtifacts allowEmptyArchive: true,
+                artifacts: "**/*.csv",
+                caseSensitive: true,
+                defaultExcludes: false,
+                fingerprint: true,
+                onlyIfSuccessful: true
         }
     }
 }
