@@ -4,7 +4,7 @@ timestamps {
             cleanWs()
         }
         parameters {
-            choice(name: 'ENVIRONMENT', choices: ['dev', 'uat',''prod], description: 'Select environment')
+            choice(name: 'ENVIRONMENT', choices: ['dev', 'uat','prod'], description: 'Select environment')
             
         }
         stage('Checkout') {
