@@ -23,6 +23,7 @@ timestamps {
         }
         stage('ACTION/DeACTION') {
             // Install required packages:
+            sh "install python3"
             def python = tool name: 'Python', type: 'Tool'
             // Install boto3 package
             sh "${python}/bin/python -m pip install --user boto3"
