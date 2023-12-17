@@ -1,5 +1,10 @@
 timestamps {
     node('built-in') {
+         tools {
+        // Define a tool named 'Python' with an installation of Python 3.x
+        // You can configure this in Jenkins Global Tool Configuration
+        tool 'Python'
+    }
         stage('CleanWorkspace') {
             cleanWs()
         }
