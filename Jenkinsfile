@@ -21,10 +21,11 @@ timestamps {
             // Install required packages:
             def AccessKeyId 
             def SecretAccessKey
-            sh 'python -m pip install --user boto3'
+          def python = tool name: 'Python', type: 'Tool'
+          sh "${python}/bin/python -m pip install --user boto3"
             // Change directory and set AWS profile and region based on the environment
             sh '''
-                
+                def python = tool name: 'Python', type: 'Tool'
                 if [ "$ENVIRONMENT" == "dev" ]; then
                     export AWS_PROFILE=dev
                     export AWS_DEFAULT_REGION=${AWS_REGION}
