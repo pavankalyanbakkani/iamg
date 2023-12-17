@@ -1,5 +1,5 @@
 timestamps {
-    node('NEW_DSOD_Api_buildagent') {
+    node('built-in') {
         stage('CleanWorkspace') {
             cleanWs()
         }
